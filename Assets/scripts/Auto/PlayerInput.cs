@@ -24,7 +24,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""CharacterControls"",
+            ""name"": ""HumanControls"",
             ""id"": ""51d42fce-affd-4951-b61d-66445670e2b7"",
             ""actions"": [
                 {
@@ -62,6 +62,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseRotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""9f9b4a06-17c6-4dc4-a54f-aea0b0ce575b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -240,23 +249,57 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""4330e6a0-79d0-4817-929c-8c3901aa5242"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""db0ba3f8-e48c-43ff-999f-aea6745f4179"",
+                    ""path"": ""<Mouse>/delta/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5f366241-5445-4730-9c88-eef43d853b18"",
+                    ""path"": ""<Mouse>/delta/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // CharacterControls
-        m_CharacterControls = asset.FindActionMap("CharacterControls", throwIfNotFound: true);
-        m_CharacterControls_MovementDirection = m_CharacterControls.FindAction("MovementDirection", throwIfNotFound: true);
-        m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
-        m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
-        m_CharacterControls_Movement = m_CharacterControls.FindAction("Movement", throwIfNotFound: true);
+        // HumanControls
+        m_HumanControls = asset.FindActionMap("HumanControls", throwIfNotFound: true);
+        m_HumanControls_MovementDirection = m_HumanControls.FindAction("MovementDirection", throwIfNotFound: true);
+        m_HumanControls_Run = m_HumanControls.FindAction("Run", throwIfNotFound: true);
+        m_HumanControls_Jump = m_HumanControls.FindAction("Jump", throwIfNotFound: true);
+        m_HumanControls_Movement = m_HumanControls.FindAction("Movement", throwIfNotFound: true);
+        m_HumanControls_MouseRotation = m_HumanControls.FindAction("MouseRotation", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
-        UnityEngine.Debug.Assert(!m_CharacterControls.enabled, "This will cause a leak and performance issues, PlayerInput.CharacterControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_HumanControls.enabled, "This will cause a leak and performance issues, PlayerInput.HumanControls.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -315,30 +358,32 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // CharacterControls
-    private readonly InputActionMap m_CharacterControls;
-    private List<ICharacterControlsActions> m_CharacterControlsActionsCallbackInterfaces = new List<ICharacterControlsActions>();
-    private readonly InputAction m_CharacterControls_MovementDirection;
-    private readonly InputAction m_CharacterControls_Run;
-    private readonly InputAction m_CharacterControls_Jump;
-    private readonly InputAction m_CharacterControls_Movement;
-    public struct CharacterControlsActions
+    // HumanControls
+    private readonly InputActionMap m_HumanControls;
+    private List<IHumanControlsActions> m_HumanControlsActionsCallbackInterfaces = new List<IHumanControlsActions>();
+    private readonly InputAction m_HumanControls_MovementDirection;
+    private readonly InputAction m_HumanControls_Run;
+    private readonly InputAction m_HumanControls_Jump;
+    private readonly InputAction m_HumanControls_Movement;
+    private readonly InputAction m_HumanControls_MouseRotation;
+    public struct HumanControlsActions
     {
         private @PlayerInput m_Wrapper;
-        public CharacterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MovementDirection => m_Wrapper.m_CharacterControls_MovementDirection;
-        public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
-        public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
-        public InputAction @Movement => m_Wrapper.m_CharacterControls_Movement;
-        public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
+        public HumanControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MovementDirection => m_Wrapper.m_HumanControls_MovementDirection;
+        public InputAction @Run => m_Wrapper.m_HumanControls_Run;
+        public InputAction @Jump => m_Wrapper.m_HumanControls_Jump;
+        public InputAction @Movement => m_Wrapper.m_HumanControls_Movement;
+        public InputAction @MouseRotation => m_Wrapper.m_HumanControls_MouseRotation;
+        public InputActionMap Get() { return m_Wrapper.m_HumanControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CharacterControlsActions set) { return set.Get(); }
-        public void AddCallbacks(ICharacterControlsActions instance)
+        public static implicit operator InputActionMap(HumanControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IHumanControlsActions instance)
         {
-            if (instance == null || m_Wrapper.m_CharacterControlsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_CharacterControlsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_HumanControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HumanControlsActionsCallbackInterfaces.Add(instance);
             @MovementDirection.started += instance.OnMovementDirection;
             @MovementDirection.performed += instance.OnMovementDirection;
             @MovementDirection.canceled += instance.OnMovementDirection;
@@ -351,9 +396,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @MouseRotation.started += instance.OnMouseRotation;
+            @MouseRotation.performed += instance.OnMouseRotation;
+            @MouseRotation.canceled += instance.OnMouseRotation;
         }
 
-        private void UnregisterCallbacks(ICharacterControlsActions instance)
+        private void UnregisterCallbacks(IHumanControlsActions instance)
         {
             @MovementDirection.started -= instance.OnMovementDirection;
             @MovementDirection.performed -= instance.OnMovementDirection;
@@ -367,28 +415,32 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @MouseRotation.started -= instance.OnMouseRotation;
+            @MouseRotation.performed -= instance.OnMouseRotation;
+            @MouseRotation.canceled -= instance.OnMouseRotation;
         }
 
-        public void RemoveCallbacks(ICharacterControlsActions instance)
+        public void RemoveCallbacks(IHumanControlsActions instance)
         {
-            if (m_Wrapper.m_CharacterControlsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_HumanControlsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(ICharacterControlsActions instance)
+        public void SetCallbacks(IHumanControlsActions instance)
         {
-            foreach (var item in m_Wrapper.m_CharacterControlsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_HumanControlsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_CharacterControlsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_HumanControlsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public CharacterControlsActions @CharacterControls => new CharacterControlsActions(this);
-    public interface ICharacterControlsActions
+    public HumanControlsActions @HumanControls => new HumanControlsActions(this);
+    public interface IHumanControlsActions
     {
         void OnMovementDirection(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnMouseRotation(InputAction.CallbackContext context);
     }
 }

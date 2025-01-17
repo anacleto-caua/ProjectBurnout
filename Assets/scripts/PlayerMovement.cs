@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.Rendering;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     int isFallingHash;
     int isJumpingHash;
 
-    Vector2 currentMovementInput;
+    Vector3 currentMovementInput;
     Vector3 currentMovement;
     Vector3 currentRunMovement;
     Vector3 lastFrameMovement;
@@ -40,11 +41,16 @@ public class PlayerController : MonoBehaviour
     float gravity = -9.81f;
     float groundedGravity = -0.05f;
 
+    float airResistance = -0.5f;
+    float aproximationCorrection = 0.01f;
+
     float maxJumpTime = 1f;
     float initialJumpVelocity;
     float maxJumpHeight = 3f;
     bool isJumping = false;
 
+    float mouseRotation = 0f;
+    float mouseSensibility = 100f;
 
 
     // Start is called before the first frame update
@@ -64,18 +70,25 @@ public class PlayerController : MonoBehaviour
 
         #region InputSetup
         // Movement direction from WASD
-        playerInput.CharacterControls.MovementDirection.started += OnMovementDirInput;
-        playerInput.CharacterControls.MovementDirection.performed += OnMovementDirInput;
-        playerInput.CharacterControls.MovementDirection.canceled += OnMovementDirInput;
+        playerInput.HumanControls.Movement.started += OnMovementDirInput;
+        playerInput.HumanControls.Movement.performed += OnMovementDirInput;
+        playerInput.HumanControls.Movement.canceled += OnMovementDirInput;
 
-        playerInput.CharacterControls.Run.started += OnRun;
-        playerInput.CharacterControls.Run.canceled += OnRun;
+        playerInput.HumanControls.Run.started += OnRun;
+        playerInput.HumanControls.Run.canceled += OnRun;
 
-        playerInput.CharacterControls.Jump.started += OnJump;
-        playerInput.CharacterControls.Jump.canceled += OnJump;
+        playerInput.HumanControls.Jump.started += OnJump;
+        playerInput.HumanControls.Jump.canceled += OnJump;
+
+        playerInput.HumanControls.MouseRotation.started += OnMouseRotation;
+        playerInput.HumanControls.MouseRotation.performed += OnMouseRotation;
+        playerInput.HumanControls.MouseRotation.canceled += OnMouseRotation;
+
         #endregion InputSetup
 
         SetupJumpVariables();
+
+        LockCursor();
     }
     void SetupJumpVariables()
     {
@@ -87,13 +100,17 @@ public class PlayerController : MonoBehaviour
     #region InputCallbacks
     void OnMovementDirInput(InputAction.CallbackContext context)
     {
-        currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = -currentMovementInput.y;
-        currentMovement.z = currentMovementInput.x;
+        currentMovementInput = context.ReadValue<Vector3>();
+        currentMovement = currentMovementInput;
 
         currentRunMovement = currentMovement * runMultiplier;
 
-        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
+        isMovementPressed = currentMovementInput != Vector3.zero;
+    }
+
+    void OnMouseRotation(InputAction.CallbackContext context)
+    {
+        mouseRotation = context.ReadValue<float>();
     }
 
     void OnRun(InputAction.CallbackContext context)
@@ -111,6 +128,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float yRotation = mouseRotation * mouseSensibility * Time.deltaTime;
+        transform.rotation *= Quaternion.Euler(0f, yRotation, 0f);
+
+
         HandleMovement();
 
         if (isMovementPressed)
@@ -120,6 +141,8 @@ public class PlayerController : MonoBehaviour
 
         //HandleRotation();
         //HandleAnimation();
+
+        HandleCursorLocking();
     }
 
     void HandleMovement()
@@ -130,12 +153,15 @@ public class PlayerController : MonoBehaviour
         if (characterController.isGrounded)
         {
             movement = (isRunPressed ? currentRunMovement : currentMovement) * speed;
+            movement = transform.rotation * movement;
+
         }
         else
         {
             movement = lastFrameMovement;
             movement.y = 0;
         }
+
 
         // Handle gravity and jump
         if (characterController.isGrounded)
@@ -156,11 +182,38 @@ public class PlayerController : MonoBehaviour
             currentMovement.y += gravity * Time.deltaTime;
         }
 
+        //if (lastFrameMovement.x > 0)
+        //{
+        //    lastFrameMovement.x += airResistance;
+        //}
+        //else if (lastFrameMovement.x < 0)
+        //{
+        //    lastFrameMovement.x -= airResistance;
+        //}
+
+        //if (lastFrameMovement.x < aproximationCorrection && lastFrameMovement.x)
+        //{
+        //    lastFrameMovement.x = 0;
+        //}
+
         lastFrameMovement = (movement + new Vector3(0, currentMovement.y, 0));
 
         // Apply final movement
         characterController.Move(lastFrameMovement * Time.deltaTime);
 
+    }
+
+    void HandleCursorLocking()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnlockCursor();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            LockCursor();
+        }
     }
 
     void HandleAnimation()
@@ -276,14 +329,26 @@ public class PlayerController : MonoBehaviour
     }
 
     #region EnableAndDisablePlayerInput
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     void OnEnable()
     {
-        playerInput.CharacterControls.Enable();
+        playerInput.HumanControls.Enable();
     }
 
     void OnDisable()
     {
-        playerInput.CharacterControls.Disable();
+        playerInput.HumanControls.Disable();
     }
     #endregion EnableAndDisablePlayerInput
 
