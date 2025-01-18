@@ -1235,6 +1235,11 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &4946135012672984204 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4153594311861411140, guid: 5e6fabcdb4833dd4e9f0f221655e7afb, type: 3}
+  m_PrefabInstance: {fileID: 4393664599763460596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6095249486533616756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1442,6 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193ac6b9de7800e4abd1f37c5bd44029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HumanTransform: {fileID: 4946135012672984204}
   playerCamera: {fileID: 224419251835070650}
   playerRef: {fileID: 1672240410975333982}
 --- !u!23 &8353874390206624901

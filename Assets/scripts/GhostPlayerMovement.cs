@@ -11,6 +11,11 @@ using UnityEngineInternal;
 
 public class GhostPlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    public Transform HumanTransform;
+
+    float chainLimit = 25f;
+
     public PlayerInput playerInput;
     Animator animator;
     CharacterController characterController;
@@ -117,7 +122,8 @@ public class GhostPlayerMovement : MonoBehaviour
         }
 
         //HandleAnimation();
-
+        
+        HandleChain();
         HandleCameraDistace();
     }
 
@@ -138,6 +144,15 @@ public class GhostPlayerMovement : MonoBehaviour
         characterController.Move(movement * Time.deltaTime);
         
         lastFrameMovement = movement;
+    }
+
+    void HandleChain()
+    {
+        if (Vector3.Distance(transform.position, HumanTransform.position) < chainLimit) return;
+
+
+        Vector3 dir = HumanTransform.position - transform.position;
+        characterController.Move(dir * Time.deltaTime * speed);
     }
 
     void HandleAnimation()
