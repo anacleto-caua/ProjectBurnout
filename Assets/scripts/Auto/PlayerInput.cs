@@ -440,6 +440,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""GameConfig"",
+            ""id"": ""649e345b-9bd1-42a3-b095-5c365343f9ff"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchChar"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ecf431c-aaa9-4903-968c-73aea9d736f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c777bca2-6496-46f5-b165-e6ec1fdc1402"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchChar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -456,12 +484,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_GhostControls_Movement = m_GhostControls.FindAction("Movement", throwIfNotFound: true);
         m_GhostControls_Run = m_GhostControls.FindAction("Run", throwIfNotFound: true);
         m_GhostControls_MouseRotation = m_GhostControls.FindAction("MouseRotation", throwIfNotFound: true);
+        // GameConfig
+        m_GameConfig = asset.FindActionMap("GameConfig", throwIfNotFound: true);
+        m_GameConfig_SwitchChar = m_GameConfig.FindAction("SwitchChar", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_HumanControls.enabled, "This will cause a leak and performance issues, PlayerInput.HumanControls.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_GhostControls.enabled, "This will cause a leak and performance issues, PlayerInput.GhostControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameConfig.enabled, "This will cause a leak and performance issues, PlayerInput.GameConfig.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -659,6 +691,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public GhostControlsActions @GhostControls => new GhostControlsActions(this);
+
+    // GameConfig
+    private readonly InputActionMap m_GameConfig;
+    private List<IGameConfigActions> m_GameConfigActionsCallbackInterfaces = new List<IGameConfigActions>();
+    private readonly InputAction m_GameConfig_SwitchChar;
+    public struct GameConfigActions
+    {
+        private @PlayerInput m_Wrapper;
+        public GameConfigActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchChar => m_Wrapper.m_GameConfig_SwitchChar;
+        public InputActionMap Get() { return m_Wrapper.m_GameConfig; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameConfigActions set) { return set.Get(); }
+        public void AddCallbacks(IGameConfigActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameConfigActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameConfigActionsCallbackInterfaces.Add(instance);
+            @SwitchChar.started += instance.OnSwitchChar;
+            @SwitchChar.performed += instance.OnSwitchChar;
+            @SwitchChar.canceled += instance.OnSwitchChar;
+        }
+
+        private void UnregisterCallbacks(IGameConfigActions instance)
+        {
+            @SwitchChar.started -= instance.OnSwitchChar;
+            @SwitchChar.performed -= instance.OnSwitchChar;
+            @SwitchChar.canceled -= instance.OnSwitchChar;
+        }
+
+        public void RemoveCallbacks(IGameConfigActions instance)
+        {
+            if (m_Wrapper.m_GameConfigActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGameConfigActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameConfigActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameConfigActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GameConfigActions @GameConfig => new GameConfigActions(this);
     public interface IHumanControlsActions
     {
         void OnMovementDirection(InputAction.CallbackContext context);
@@ -672,5 +750,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnMouseRotation(InputAction.CallbackContext context);
+    }
+    public interface IGameConfigActions
+    {
+        void OnSwitchChar(InputAction.CallbackContext context);
     }
 }

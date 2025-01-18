@@ -9,9 +9,9 @@ using UnityEngine.InputSystem.Composites;
 using UnityEngine.Rendering;
 using UnityEngineInternal;
 
-public class GhostPlayerController : MonoBehaviour
+public class GhostPlayerMovement : MonoBehaviour
 {
-    PlayerInput playerInput;
+    public PlayerInput playerInput;
     Animator animator;
     CharacterController characterController;
     public Camera playerCamera;
@@ -35,8 +35,8 @@ public class GhostPlayerController : MonoBehaviour
     bool isRunPressed;
     bool isJumpPressed;
 
-    float speed = 5.0f;
-    float runMultiplier = 2.0f;
+    float speed = 13.0f;
+    float runMultiplier = 1.3f;
 
     bool isJumping = false;
 
@@ -52,10 +52,8 @@ public class GhostPlayerController : MonoBehaviour
     float minCameraZoom = 2.5f;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        playerInput = new PlayerInput();
-
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
@@ -81,7 +79,6 @@ public class GhostPlayerController : MonoBehaviour
 
         #endregion InputSetup
 
-        LockCursor();
     }
 
     #region InputCallbacks
@@ -122,7 +119,6 @@ public class GhostPlayerController : MonoBehaviour
         //HandleAnimation();
 
         HandleCameraDistace();
-        HandleCursorLocking();
     }
 
     void HandleMovement()
@@ -142,19 +138,6 @@ public class GhostPlayerController : MonoBehaviour
         characterController.Move(movement * Time.deltaTime);
         
         lastFrameMovement = movement;
-    }
-
-    void HandleCursorLocking()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UnlockCursor();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            LockCursor();
-        }
     }
 
     void HandleAnimation()
@@ -227,34 +210,4 @@ public class GhostPlayerController : MonoBehaviour
             playerCamera.transform.position += playerCamera.transform.forward * cameraSpeed * Time.deltaTime;
         }
     }
-
-    void OnDrawGizmos()
-    {
-
-    }
-
-    #region EnableAndDisablePlayerInput
-    void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    void OnEnable()
-    {
-        playerInput.GhostControls.Enable();
-    }
-
-    void OnDisable()
-    {
-        playerInput.GhostControls.Disable();
-    }
-    #endregion EnableAndDisablePlayerInput
-
 }

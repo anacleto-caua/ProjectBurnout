@@ -9,9 +9,10 @@ using UnityEngine.InputSystem.Composites;
 using UnityEngine.Rendering;
 using UnityEngineInternal;
 
-public class PlayerController : MonoBehaviour
+public class HumanPlayerMovement : MonoBehaviour
 {
-    PlayerInput playerInput;
+
+    public PlayerInput playerInput;
     Animator animator;
     CharacterController characterController;
     public Camera playerCamera;
@@ -55,10 +56,8 @@ public class PlayerController : MonoBehaviour
     float minCameraZoom = 2.5f;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        playerInput = new PlayerInput();
-
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
@@ -88,8 +87,6 @@ public class PlayerController : MonoBehaviour
         #endregion InputSetup
 
         SetupJumpVariables();
-
-        LockCursor();
     }
     void SetupJumpVariables()
     {
@@ -143,7 +140,6 @@ public class PlayerController : MonoBehaviour
         //HandleAnimation();
 
         HandleCameraDistace();
-        HandleCursorLocking();
     }
 
     void HandleMovement()
@@ -189,19 +185,6 @@ public class PlayerController : MonoBehaviour
         // Apply final movement
         characterController.Move(lastFrameMovement * Time.deltaTime);
 
-    }
-
-    void HandleCursorLocking()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UnlockCursor();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            LockCursor();
-        }
     }
 
     void HandleAnimation()
@@ -274,34 +257,4 @@ public class PlayerController : MonoBehaviour
             playerCamera.transform.position += playerCamera.transform.forward * cameraSpeed * Time.deltaTime;
         }
     }
-
-    void OnDrawGizmos()
-    {
-
-    }
-
-    #region EnableAndDisablePlayerInput
-    void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    void OnEnable()
-    {
-        playerInput.HumanControls.Enable();
-    }
-
-    void OnDisable()
-    {
-        playerInput.HumanControls.Disable();
-    }
-    #endregion EnableAndDisablePlayerInput
-
 }

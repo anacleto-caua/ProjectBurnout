@@ -418,6 +418,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "GameConfig",
+            "id": "649e345b-9bd1-42a3-b095-5c365343f9ff",
+            "actions": [
+                {
+                    "name": "SwitchChar",
+                    "type": "Button",
+                    "id": "4ecf431c-aaa9-4903-968c-73aea9d736f3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c777bca2-6496-46f5-b165-e6ec1fdc1402",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchChar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
