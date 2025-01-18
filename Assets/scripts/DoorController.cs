@@ -4,13 +4,13 @@ public class DoorController : MonoBehaviour
 {
 
     [SerializeField]
-    Transform DoorItself;
+    private Transform DoorItself;
 
     [SerializeField]
     bool isToOpen = false;
 
     [SerializeField]
-    bool isOpen = false;
+    public bool isOpen = false;
 
     [SerializeField]
     float doorSpeed = 3.5f;
@@ -41,7 +41,7 @@ public class DoorController : MonoBehaviour
         }
     }
 
-    public void OpenDoor()
+    public virtual void OpenDoor()
     {
         if (!isOpen)
         {

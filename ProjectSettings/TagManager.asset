@@ -15,7 +15,7 @@ TagManager:
   - GhostPlayer
   - HumanInteract
   - GhostInteract
-  - Glow
+  - GhostBarrier
   - 
   - 
   - 
