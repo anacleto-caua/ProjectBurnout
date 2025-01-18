@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.Composites;
 using UnityEngine.Rendering;
 using UnityEngineInternal;
 
-public class PlayerController : MonoBehaviour
+public class GhostPlayerController : MonoBehaviour
 {
     PlayerInput playerInput;
     Animator animator;
@@ -37,16 +37,13 @@ public class PlayerController : MonoBehaviour
 
     float speed = 5.0f;
     float runMultiplier = 2.0f;
-    float gravity = -9.81f;
-    float groundedGravity = -0.05f;
 
-    float maxJumpTime = 1f;
-    float initialJumpVelocity;
-    float maxJumpHeight = 3f;
     bool isJumping = false;
 
     float mouseRotation = 0f;
     float mouseSensibility = 100f;
+
+    float airResistance = .7f;
 
     [SerializeField]
     Transform playerRef;
@@ -71,35 +68,24 @@ public class PlayerController : MonoBehaviour
 
         #region InputSetup
         // Movement direction from WASD
-        playerInput.HumanControls.Movement.started += OnMovementDirInput;
-        playerInput.HumanControls.Movement.performed += OnMovementDirInput;
-        playerInput.HumanControls.Movement.canceled += OnMovementDirInput;
+        playerInput.GhostControls.Movement.started += OnMovementInput;
+        playerInput.GhostControls.Movement.performed += OnMovementInput;
+        playerInput.GhostControls.Movement.canceled += OnMovementInput;
 
-        playerInput.HumanControls.Run.started += OnRun;
-        playerInput.HumanControls.Run.canceled += OnRun;
+        playerInput.GhostControls.Run.started += OnRun;
+        playerInput.GhostControls.Run.canceled += OnRun;
 
-        playerInput.HumanControls.Jump.started += OnJump;
-        playerInput.HumanControls.Jump.canceled += OnJump;
-
-        playerInput.HumanControls.MouseRotation.started += OnMouseRotation;
-        playerInput.HumanControls.MouseRotation.performed += OnMouseRotation;
-        playerInput.HumanControls.MouseRotation.canceled += OnMouseRotation;
+        playerInput.GhostControls.MouseRotation.started += OnMouseRotation;
+        playerInput.GhostControls.MouseRotation.performed += OnMouseRotation;
+        playerInput.GhostControls.MouseRotation.canceled += OnMouseRotation;
 
         #endregion InputSetup
 
-        SetupJumpVariables();
-
         LockCursor();
-    }
-    void SetupJumpVariables()
-    {
-        float timeToApex = maxJumpTime / 2;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
 
     #region InputCallbacks
-    void OnMovementDirInput(InputAction.CallbackContext context)
+    void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector3>();
         currentMovement = currentMovementInput;
@@ -118,12 +104,6 @@ public class PlayerController : MonoBehaviour
     {
         isRunPressed = context.ReadValueAsButton();
     }
-
-    void OnJump(InputAction.CallbackContext context)
-    {
-        isJumpPressed = context.ReadValueAsButton();
-    }
-
     #endregion InputCallbacks
 
     // Update is called once per frame
@@ -131,7 +111,6 @@ public class PlayerController : MonoBehaviour
     {
         float yRotation = mouseRotation * mouseSensibility * Time.deltaTime;
         transform.rotation *= Quaternion.Euler(0f, yRotation, 0f);
-
 
         HandleMovement();
 
@@ -151,44 +130,18 @@ public class PlayerController : MonoBehaviour
         // Handle horizontal movement
         Vector3 movement = Vector3.zero;
 
-        if (characterController.isGrounded)
+        if (isMovementPressed)
         {
             movement = (isRunPressed ? currentRunMovement : currentMovement);
             movement = movement.normalized * speed;
             movement = transform.rotation * movement;
-
-        }
-        else
-        {
-            movement = lastFrameMovement;
-            movement.y = 0;
         }
 
-
-        // Handle gravity and jump
-        if (characterController.isGrounded)
-        {
-            if (isJumpPressed)
-            {
-                isJumping = true;
-                currentMovement.y = initialJumpVelocity;
-            }
-            else
-            {
-                isJumping = false;
-                currentMovement.y = groundedGravity; // Minimal downward force to keep grounded
-            }
-        }
-        else
-        {
-            currentMovement.y += gravity * Time.deltaTime;
-        }
-
-        lastFrameMovement = (movement + new Vector3(0, currentMovement.y, 0));
 
         // Apply final movement
-        characterController.Move(lastFrameMovement * Time.deltaTime);
-
+        characterController.Move(movement * Time.deltaTime);
+        
+        lastFrameMovement = movement;
     }
 
     void HandleCursorLocking()
@@ -259,8 +212,8 @@ public class PlayerController : MonoBehaviour
 
     void HandleCameraDistace()
     {
-        // Layer Mask to ignore only the "Human Layer"
-        int layerToIgnore = 1 << 6;
+        // Layer Mask to ignore only the "Ghost Layer"
+        int layerToIgnore = 1 << 7;
         int layerMask = ~layerToIgnore;
 
         Vector3 direction = (playerRef.position - playerCamera.transform.position).normalized;
@@ -295,12 +248,12 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        playerInput.HumanControls.Enable();
+        playerInput.GhostControls.Enable();
     }
 
     void OnDisable()
     {
-        playerInput.HumanControls.Disable();
+        playerInput.GhostControls.Disable();
     }
     #endregion EnableAndDisablePlayerInput
 
