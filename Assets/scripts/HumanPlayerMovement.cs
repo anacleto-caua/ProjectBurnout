@@ -13,6 +13,8 @@ public class HumanPlayerMovement : MonoBehaviour
 {
 
     public PlayerInput playerInput;
+
+    [SerializeField]
     Animator animator;
     CharacterController characterController;
     public Camera playerCamera;
@@ -59,7 +61,6 @@ public class HumanPlayerMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
 
         #region AnimatorHashs
         isWalkingHash = Animator.StringToHash("IsWalking");
@@ -137,7 +138,7 @@ public class HumanPlayerMovement : MonoBehaviour
             // Optionally rotate or handle animations
         }
 
-        //HandleAnimation();
+        HandleAnimation();
 
         HandleCameraDistace();
     }
