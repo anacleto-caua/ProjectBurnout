@@ -9,9 +9,13 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     bool isToOpen = false;
 
+    [SerializeField]
     bool isOpen = false;
 
+    [SerializeField]
     float doorSpeed = 3.5f;
+    
+    [SerializeField]
     float neededDoorDisplacement = 5.1f;
 
     Vector3 doorOrigin;
