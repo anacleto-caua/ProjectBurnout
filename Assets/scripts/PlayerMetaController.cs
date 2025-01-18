@@ -42,8 +42,6 @@ public class PlayerMetaController : MonoBehaviour
         ghostCamera.SetActive(false);
         playerInput.GhostControls.Disable();
 
-        Debug.Log("its off");
-
         #region InputSetup
         playerInput.GameConfig.SwitchChar.started += OnSwitchChar;
         #endregion InputSetups
