@@ -51,7 +51,6 @@ public class HumanPlateBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entered trigger");
         timer = 0;
         doorToOpen.OpenDoor();
         isPressed = true;
@@ -59,7 +58,6 @@ public class HumanPlateBehaviour : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Left trigger");
         isPressed = false;
     }
 }

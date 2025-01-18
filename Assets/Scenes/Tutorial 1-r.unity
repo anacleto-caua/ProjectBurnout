@@ -1549,6 +1549,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2215832563640432166, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
   m_PrefabInstance: {fileID: 5059304627978919434}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1655580499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7428692509159872570, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+  m_PrefabInstance: {fileID: 5059304627978919434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1655580503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655580499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee38e86dd0cbd3488e47f7b454f2d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 1081629405}
 --- !u!1 &1723953045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,14 +1967,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3356032674341445534, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837693419155273645, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837693419155273645, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837693419155273645, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837693419155273645, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7428692509159872570, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
       propertyPath: m_Name
       value: GhoastChecpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 7428692509159872570, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7428692509159872570, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1655580503}
   m_SourcePrefab: {fileID: 100100000, guid: f113a2e1391c9b6c1939f85a3fb2214d, type: 3}
 --- !u!1001 &8261077173257023442
 PrefabInstance:
