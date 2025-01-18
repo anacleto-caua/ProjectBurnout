@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GhostCheckpointController : MonoBehaviour
+public class GhostOrbController : MonoBehaviour
 {
     float radius = 2f;
 
