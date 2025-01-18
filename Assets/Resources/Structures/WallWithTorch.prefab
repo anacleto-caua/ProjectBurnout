@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4205486597075990248}
   - component: {fileID: 8130291473161371751}
   m_Layer: 0
-  m_Name: Wall (4)
+  m_Name: WallWithTorch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
