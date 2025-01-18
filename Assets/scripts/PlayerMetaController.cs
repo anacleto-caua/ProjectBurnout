@@ -19,6 +19,12 @@ public class PlayerMetaController : MonoBehaviour
     [SerializeField]
     GameObject ghostCamera;
 
+    bool isTutorialOnScreen = true;
+
+    [SerializeField]
+    Canvas tut;
+
+
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -86,6 +92,16 @@ public class PlayerMetaController : MonoBehaviour
         {
             LockCursor();
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (isTutorialOnScreen)
+            {
+                isTutorialOnScreen = false;
+                Destroy(tut);
+            }
+        }
+
 
     }
 
