@@ -284,6 +284,190 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""GhostControls"",
+            ""id"": ""c2869021-49c0-48c0-8e8f-a516d00c7da5"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ac4e455a-077c-43f7-9f7f-73dd08426675"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2ba7dff-bb53-46eb-8b70-de80fc18b0db"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseRotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cf4e91bc-5f67-4c54-b651-d60e15767ec7"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""0a5e2454-5778-4e0f-8593-e2043dc093b7"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""7bbc9883-b878-4bff-92d2-68dc2c66f184"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""aaf78f80-c41f-4947-8eb9-3a2947d36b77"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""189ae6dc-8a54-4e25-9f63-2c08e48f3bc0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f2c4c3f8-d9b0-4b5e-8ce0-819526061633"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""9a7f5652-97bc-4788-8be5-c0353a55aca7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""acc4a613-a7f5-4078-b3e2-9f033ed54760"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""369134c4-b231-475a-848d-78f9d96abdfa"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""da5e8587-9654-4809-97b9-addbadb2e881"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""56a2bf14-7339-4918-9320-5bbdd9a2c5fc"",
+                    ""path"": ""<Mouse>/delta/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a999ba88-5be2-4e13-b189-14448ab8ebe1"",
+                    ""path"": ""<Mouse>/delta/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""GameConfig"",
+            ""id"": ""649e345b-9bd1-42a3-b095-5c365343f9ff"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchChar"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ecf431c-aaa9-4903-968c-73aea9d736f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c777bca2-6496-46f5-b165-e6ec1fdc1402"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchChar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -295,11 +479,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_HumanControls_Jump = m_HumanControls.FindAction("Jump", throwIfNotFound: true);
         m_HumanControls_Movement = m_HumanControls.FindAction("Movement", throwIfNotFound: true);
         m_HumanControls_MouseRotation = m_HumanControls.FindAction("MouseRotation", throwIfNotFound: true);
+        // GhostControls
+        m_GhostControls = asset.FindActionMap("GhostControls", throwIfNotFound: true);
+        m_GhostControls_Movement = m_GhostControls.FindAction("Movement", throwIfNotFound: true);
+        m_GhostControls_Run = m_GhostControls.FindAction("Run", throwIfNotFound: true);
+        m_GhostControls_MouseRotation = m_GhostControls.FindAction("MouseRotation", throwIfNotFound: true);
+        // GameConfig
+        m_GameConfig = asset.FindActionMap("GameConfig", throwIfNotFound: true);
+        m_GameConfig_SwitchChar = m_GameConfig.FindAction("SwitchChar", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_HumanControls.enabled, "This will cause a leak and performance issues, PlayerInput.HumanControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GhostControls.enabled, "This will cause a leak and performance issues, PlayerInput.GhostControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameConfig.enabled, "This will cause a leak and performance issues, PlayerInput.GameConfig.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -435,6 +629,114 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public HumanControlsActions @HumanControls => new HumanControlsActions(this);
+
+    // GhostControls
+    private readonly InputActionMap m_GhostControls;
+    private List<IGhostControlsActions> m_GhostControlsActionsCallbackInterfaces = new List<IGhostControlsActions>();
+    private readonly InputAction m_GhostControls_Movement;
+    private readonly InputAction m_GhostControls_Run;
+    private readonly InputAction m_GhostControls_MouseRotation;
+    public struct GhostControlsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public GhostControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_GhostControls_Movement;
+        public InputAction @Run => m_Wrapper.m_GhostControls_Run;
+        public InputAction @MouseRotation => m_Wrapper.m_GhostControls_MouseRotation;
+        public InputActionMap Get() { return m_Wrapper.m_GhostControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GhostControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IGhostControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GhostControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GhostControlsActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
+            @MouseRotation.started += instance.OnMouseRotation;
+            @MouseRotation.performed += instance.OnMouseRotation;
+            @MouseRotation.canceled += instance.OnMouseRotation;
+        }
+
+        private void UnregisterCallbacks(IGhostControlsActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
+            @MouseRotation.started -= instance.OnMouseRotation;
+            @MouseRotation.performed -= instance.OnMouseRotation;
+            @MouseRotation.canceled -= instance.OnMouseRotation;
+        }
+
+        public void RemoveCallbacks(IGhostControlsActions instance)
+        {
+            if (m_Wrapper.m_GhostControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGhostControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GhostControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GhostControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GhostControlsActions @GhostControls => new GhostControlsActions(this);
+
+    // GameConfig
+    private readonly InputActionMap m_GameConfig;
+    private List<IGameConfigActions> m_GameConfigActionsCallbackInterfaces = new List<IGameConfigActions>();
+    private readonly InputAction m_GameConfig_SwitchChar;
+    public struct GameConfigActions
+    {
+        private @PlayerInput m_Wrapper;
+        public GameConfigActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchChar => m_Wrapper.m_GameConfig_SwitchChar;
+        public InputActionMap Get() { return m_Wrapper.m_GameConfig; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameConfigActions set) { return set.Get(); }
+        public void AddCallbacks(IGameConfigActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameConfigActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameConfigActionsCallbackInterfaces.Add(instance);
+            @SwitchChar.started += instance.OnSwitchChar;
+            @SwitchChar.performed += instance.OnSwitchChar;
+            @SwitchChar.canceled += instance.OnSwitchChar;
+        }
+
+        private void UnregisterCallbacks(IGameConfigActions instance)
+        {
+            @SwitchChar.started -= instance.OnSwitchChar;
+            @SwitchChar.performed -= instance.OnSwitchChar;
+            @SwitchChar.canceled -= instance.OnSwitchChar;
+        }
+
+        public void RemoveCallbacks(IGameConfigActions instance)
+        {
+            if (m_Wrapper.m_GameConfigActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGameConfigActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameConfigActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameConfigActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GameConfigActions @GameConfig => new GameConfigActions(this);
     public interface IHumanControlsActions
     {
         void OnMovementDirection(InputAction.CallbackContext context);
@@ -442,5 +744,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnMouseRotation(InputAction.CallbackContext context);
+    }
+    public interface IGhostControlsActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnMouseRotation(InputAction.CallbackContext context);
+    }
+    public interface IGameConfigActions
+    {
+        void OnSwitchChar(InputAction.CallbackContext context);
     }
 }

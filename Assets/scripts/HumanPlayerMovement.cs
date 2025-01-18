@@ -9,9 +9,10 @@ using UnityEngine.InputSystem.Composites;
 using UnityEngine.Rendering;
 using UnityEngineInternal;
 
-public class PlayerController : MonoBehaviour
+public class HumanPlayerMovement : MonoBehaviour
 {
-    PlayerInput playerInput;
+
+    public PlayerInput playerInput;
     Animator animator;
     CharacterController characterController;
     public Camera playerCamera;
@@ -36,13 +37,9 @@ public class PlayerController : MonoBehaviour
     bool isJumpPressed;
 
     float speed = 5.0f;
-    public float rotationDegrees = 180;
     float runMultiplier = 2.0f;
     float gravity = -9.81f;
     float groundedGravity = -0.05f;
-
-    float airResistance = -0.5f;
-    float aproximationCorrection = 0.01f;
 
     float maxJumpTime = 1f;
     float initialJumpVelocity;
@@ -52,12 +49,15 @@ public class PlayerController : MonoBehaviour
     float mouseRotation = 0f;
     float mouseSensibility = 100f;
 
+    [SerializeField]
+    Transform playerRef;
+    float cameraSpeed = 7f; 
+    float maxCameraZoom = 5f;
+    float minCameraZoom = 2.5f;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        playerInput = new PlayerInput();
-
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
@@ -87,8 +87,6 @@ public class PlayerController : MonoBehaviour
         #endregion InputSetup
 
         SetupJumpVariables();
-
-        LockCursor();
     }
     void SetupJumpVariables()
     {
@@ -139,10 +137,9 @@ public class PlayerController : MonoBehaviour
             // Optionally rotate or handle animations
         }
 
-        //HandleRotation();
         //HandleAnimation();
 
-        HandleCursorLocking();
+        HandleCameraDistace();
     }
 
     void HandleMovement()
@@ -152,7 +149,8 @@ public class PlayerController : MonoBehaviour
 
         if (characterController.isGrounded)
         {
-            movement = (isRunPressed ? currentRunMovement : currentMovement) * speed;
+            movement = (isRunPressed ? currentRunMovement : currentMovement);
+            movement = movement.normalized * speed;
             movement = transform.rotation * movement;
 
         }
@@ -182,38 +180,11 @@ public class PlayerController : MonoBehaviour
             currentMovement.y += gravity * Time.deltaTime;
         }
 
-        //if (lastFrameMovement.x > 0)
-        //{
-        //    lastFrameMovement.x += airResistance;
-        //}
-        //else if (lastFrameMovement.x < 0)
-        //{
-        //    lastFrameMovement.x -= airResistance;
-        //}
-
-        //if (lastFrameMovement.x < aproximationCorrection && lastFrameMovement.x)
-        //{
-        //    lastFrameMovement.x = 0;
-        //}
-
         lastFrameMovement = (movement + new Vector3(0, currentMovement.y, 0));
 
         // Apply final movement
         characterController.Move(lastFrameMovement * Time.deltaTime);
 
-    }
-
-    void HandleCursorLocking()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UnlockCursor();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            LockCursor();
-        }
     }
 
     void HandleAnimation()
@@ -269,87 +240,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void HandleRotation()
+    void HandleCameraDistace()
     {
-        if (isDirectionPressed)
-        {
-            Vector3 currentRot = characterController.transform.eulerAngles;
-            Vector3 targetRot = new Vector3(currentRot.x, currentRot.y + (currentDirectionMovement * 45), currentRot.z);
+        // Layer Mask to ignore only the "Human Layer"
+        int layerToIgnore = 1 << 6;
+        int layerMask = ~layerToIgnore;
 
-            float step = rotationDegrees * Time.deltaTime * (isRunPressed ? 1.5f : 1f);
-            float yRot = Mathf.MoveTowardsAngle(currentRot.y, targetRot.y, step);
+        Vector3 direction = (playerRef.position - playerCamera.transform.position).normalized;
+        float distance = Vector3.Distance(playerRef.position, playerCamera.transform.position);
 
-            characterController.transform.eulerAngles = new Vector3(currentRot.x, yRot, currentRot.z);
-        }
+        RaycastHit[] hits = Physics.RaycastAll(playerCamera.transform.position, direction, distance, layerMask);
 
-    }
-
-    void HandleJump()
-    {
-        if (isJumpPressed && characterController.isGrounded && !isJumping)
-        {
-            Debug.Log("pulo2");
-
-            isJumping = true;
-            currentMovement.y = initialJumpVelocity * .5f;
-            currentRunMovement.y = initialJumpVelocity * .5f;
-
-            characterController.Move(transform.up * 5f);
-        }
-        else if (!isJumpPressed && characterController.isGrounded && isJumping)
-        {
-            Debug.Log("pulo3");
-
-            isJumping = false;
+        if (hits.Length <= 0 && distance < maxCameraZoom) {
+            playerCamera.transform.position += -playerCamera.transform.forward * cameraSpeed * Time.deltaTime;
+        }else if(hits.Length > 0 && distance > minCameraZoom){
+            playerCamera.transform.position += playerCamera.transform.forward * cameraSpeed * Time.deltaTime;
         }
     }
-
-    void HandleGravity()
-    {
-        if (!characterController.isGrounded)
-        {
-            float previousYVelocity = characterController.transform.position.y;
-            float newYVelocity = characterController.transform.position.y + (gravity * Time.deltaTime);
-            float nextYVelocity = (previousYVelocity + newYVelocity) * .2f;
-
-            //Debug.Log("Dir: " + -characterController.transform.up * nextYVelocity);
-
-            characterController.Move(-characterController.transform.up * nextYVelocity);
-        }
-        else
-        {
-            //Debug.Log("DirG: " + characterController.transform.up * groundedGravity);
-            characterController.Move(characterController.transform.up * groundedGravity);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-
-    }
-
-    #region EnableAndDisablePlayerInput
-    void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    void OnEnable()
-    {
-        playerInput.HumanControls.Enable();
-    }
-
-    void OnDisable()
-    {
-        playerInput.HumanControls.Disable();
-    }
-    #endregion EnableAndDisablePlayerInput
-
 }
