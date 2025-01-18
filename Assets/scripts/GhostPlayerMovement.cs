@@ -48,8 +48,6 @@ public class GhostPlayerMovement : MonoBehaviour
     float mouseRotation = 0f;
     float mouseSensibility = 100f;
 
-    float airResistance = .7f;
-
     [SerializeField]
     Transform playerRef;
     float cameraSpeed = 7f; 
