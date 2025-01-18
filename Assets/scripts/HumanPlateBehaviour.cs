@@ -15,9 +15,9 @@ public class HumanPlateBehaviour : MonoBehaviour
     float plateSpeed = 2f;
 
     [SerializeField]
-    double timerToForget = .5f;
+    double timerToForget = 0.5f;
 
-    bool isPressed = false;
+    public bool isPressed = false;
     float pointCorrection = 0.02f;
     double timer = 0;
 

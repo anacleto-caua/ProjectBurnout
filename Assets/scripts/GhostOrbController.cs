@@ -5,6 +5,7 @@ public class GhostOrbController : MonoBehaviour
 {
     float radius = 2f;
 
+    public bool active = false;
     LayerMask ghostLayerMask;
 
     [SerializeField]
@@ -24,6 +25,7 @@ public class GhostOrbController : MonoBehaviour
         if (colliders.Length > 0)
         {
             door.OpenDoor();
+            active = true;
         }
     }
 }
