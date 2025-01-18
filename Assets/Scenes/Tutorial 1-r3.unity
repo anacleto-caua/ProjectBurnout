@@ -2770,6 +2770,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
   m_PrefabInstance: {fileID: 1345468926}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1115327212
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1207044647}
+    m_Modifications:
+    - target: {fileID: 4445656841418190679, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_Name
+      value: Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+--- !u!4 &1115327213 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5590017733085222116, guid: 6e64bfa69dd627dde8d6f34813171873, type: 3}
+  m_PrefabInstance: {fileID: 1115327212}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1135056891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3601,6 +3671,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8623850207665324721, guid: 32d04918ab7950cbbafab15bf686a396, type: 3}
       insertIndex: -1
       addedObject: {fileID: 447583625}
+    - targetCorrespondingSourceObject: {fileID: 8623850207665324721, guid: 32d04918ab7950cbbafab15bf686a396, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1115327213}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d04918ab7950cbbafab15bf686a396, type: 3}
 --- !u!4 &1425050595 stripped
@@ -4304,7 +4377,7 @@ GameObject:
   - component: {fileID: 1961501466}
   - component: {fileID: 1961501465}
   - component: {fileID: 1961501464}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
